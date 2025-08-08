@@ -1,80 +1,90 @@
-# mogitate
+ mogitate
+
+ 概要（Overview）
+
+テスト課題として作成した Laravel プロジェクトです。
 
 環境構築
 
 Dockerビルド
-1git clone 
-2
-3
+1. git clone git@github.com:Tatsu1438/mogitate.git
+2. DockerDesktopアプリを立ち上げる
+3. docker-compose up -d --build
+
+mysql:
+
+platform: linux/amd64   
+image: mysql:8.0
+
+environment:
+
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: laravel_db
+    MYSQL_USER: laravel_user
+    MYSQL_PASSWORD: laravel_pass
+ 
+    .command:
+      mysqld --default-authentication-plugin=mysql_native_password
+    .volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+
+ Laravel環境構築
+ このプロジェクトは Docker を用いた Laravel 開発環境です。
+ 
+  1. Docker-compose exec php bash 
+  2. compose imstall
+  3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.envファイルを作成
+  4. .envに以下の環境変数を追加
+
+ environment:
+ 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: laravel_pass
 
 
- ## 概要（Overview）
+ アプリケーションキーの作成:
+ 
+    php artisan key generate
 
-テスト課題として作成した Laravel プロジェクトです。
+ マイグレーションの実行:
+  
+    php artisan migrate
 
+ シーディングの実行:
+ 
+    php artisan db:seed
 
-## 使用技術（Tech Stack）
+ 使用技術（実行環境）
 
-### 言語・フレームワーク
-- PHP 8.x
-- Laravel 10
-- HTML / CSS
+  ER図
 
-### データベース
-- MySQL 8.0
+ ![alt](product.png)
 
-### インフラ
-- Docker / Docker Compose
+ 言語・フレームワーク
+. PHP 7.4
+. Laravel 8.75
+. HTML / CSS
 
-### 開発ツール
-- VS Code
-- phpMyAdmin
-- Git / GitHub
-- Composer
-- Nginx
+ データベース
+. MySQL 8.0
 
-## 環境構築手順
+ インフラ
+. Docker / Docker Compose
 
-このプロジェクトは Docker を用いた Laravel 開発環境です。
-
-### 1. リポジトリのクローン
-
-bash
-git clone git@github.com:Tatsu1438/mogitate.git
-cd mogitate
-
-## env ファイル
-cd src
-cp .env.example .env
-cd ..
-
-## Docker コンテナ
-docker compose up -d --build
-
-## PHP コンテナ
-docker compose exec php bash
-
-## composer install
-php artisan key:generate
-php artisan migrate
+ 開発ツール
+. VS Code
+. phpMyAdmin
+. Git / GitHub
+. Composer
+. Nginx
 
 
-### アクセスURL
+ アクセスURL
 アプリ: http://localhost:8081
-phpMyAdmin（必要に応じて）: http://localhost:8080
 
-### ディレクトリ構成
-mogitate/
-├── docker/
-│   └── nginx/
-│       └── default.conf
-├── src/
-│   ├── app/
-│   ├── config/
-│   ├── public/
-│   ├── resources/
-│   ├── routes/
-│   └── ...
-├── docker-compose.yml
-└── README.md
+phpMyAdmin: http://localhost:8082
 
+ 
