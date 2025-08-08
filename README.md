@@ -1,5 +1,12 @@
 # mogitate
 
+環境構築
+
+Dockerビルド
+1git clone 
+2
+3
+
 
  ## 概要（Overview）
 
